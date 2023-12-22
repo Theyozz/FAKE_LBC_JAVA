@@ -61,6 +61,8 @@ public class AnnouncementModel {
 
     @Override
     public String toString() {
-        return "Annonce numéro : " + id;
+        return "AnnouncementModel [date=" + date + ", online=" + online + ", creator=" + creator + ", object=" + object
+                + ", id=" + id + "]";
     }
+    
 }
