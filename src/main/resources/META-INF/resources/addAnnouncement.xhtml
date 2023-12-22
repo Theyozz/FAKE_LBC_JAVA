@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>
+  <h:head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>Leboncoin - Ajouter une annonce</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </h:head>
+  <h:body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <h:link outcome="index.xhtml">
+          <h:graphicImage
+            url="https://upload.wikimedia.org/wikipedia/commons/6/63/Leboncoin_Logo_%282016%29.svg"
+            alt="Leboncoin Logo"
+            width="120px"
+          />
+        </h:link>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <h:link
+                class="me-4"
+                value="Ajouter une annonce"
+                outcome="addAnnouncement"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <h:form class="w-50 mx-auto border p-5 mt-5 rounded-2">
+      <h1 class="fs-5 m-4 text-center">Créer votre annonce</h1>
+      <div class="mb-3">
+        <label for="createur" class="form-label">Auteur</label>
+        <h:inputText
+          id="createur"
+          value="#{Leboncoin.creator}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="titre" class="form-label">Titre</label>
+        <h:inputText
+          id="titre"
+          value="#{Leboncoin.title}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="description" class="form-label">Description</label>
+        <h:inputText
+          id="description"
+          value="#{Leboncoin.description}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="contact" class="form-label">Contact</label>
+        <h:inputText
+          id="contact"
+          value="#{Leboncoin.contact}"
+          class="form-control"
+          placeholder="Votre contact par défaut"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">Prix</label>
+        <h:inputText
+          id="price"
+          value="#{Leboncoin.price}"
+          class="form-control"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="price" class="form-label">État de l'article</label>
+        <h:selectOneMenu value="#{Leboncoin.optionValue}">
+          <f:selectItems value="#{Leboncoin.displayStateOptions()}" />
+        </h:selectOneMenu>
+      </div>
+
+      <h:commandButton
+        value="Créer"
+        action="#{Leboncoin.addAnouncement()}"
+        class="btn btn-primary mx-auto"
+      />
+    </h:form>
+  </h:body>
+</html>

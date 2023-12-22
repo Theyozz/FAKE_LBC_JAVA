@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:f="http://xmlns.jcp.org/jsf/core"
+  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+  xmlns:h="http://xmlns.jcp.org/jsf/html"
+  xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>
+  <h:head>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <title>Leboncoin</title>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+  </h:head>
+  <h:body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <h:link outcome="index.xhtml">
+          <h:graphicImage
+            url="https://upload.wikimedia.org/wikipedia/commons/6/63/Leboncoin_Logo_%282016%29.svg"
+            alt="Leboncoin Logo"
+            width="120px"
+          />
+        </h:link>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <h:link
+                class="me-4"
+                value="Ajouter une annonce"
+                outcome="addAnnouncement"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <h1 class="text-center mt-5 fs-5">Bienvenue sur Leboncoin</h1>
+    <h:form>
+      <div class="text-end me-5 mb-5">
+        <h1>Trier par états</h1>
+        <h:selectOneMenu
+          value="#{Leboncoin.operationFilter}"
+          valueChangeListener="#{Leboncoin.changeOperationFilter}"
+          class="border"
+        >
+          <f:selectItems value="#{Leboncoin.displayOptions()}" />
+          <f:ajax render="@all" />
+        </h:selectOneMenu>
+      </div>
+      <div class="d-flex flex-wrap gap-4 justify-content-center">
+        <c:choose>
+          <c:when test="${empty(Leboncoin.announcements)}">
+            <h1 class="fs-5 fw-bold">
+              Aucunes annonces n'a été posté pour le moment
+            </h1>
+          </c:when>
+          <c:otherwise>
+            <c:forEach
+              var="announcement"
+              items="${Leboncoin.getFiltredAnnouncement()}"
+            >
+              <div class="card w-25">
+                <h5 class="card-header">Annonce</h5>
+                <div class="card-body">
+                  <h5 class="card-title">${announcement.object.title}</h5>
+                  <p class="card-text mb-2">
+                    ${announcement.object.description}
+                  </p>
+                  <p class="card-text mb-2">
+                    Le prix : ${announcement.object.price}€
+                  </p>
+                  <p class="card-text mb-2">
+                    Pour plus de renseignement veuillez me contacter à ce mail :
+                    ${announcement.object.contact}
+                  </p>
+                  <p class="card-text mb-2">
+                    État de l'article ${announcement.object.state}
+                  </p>
+                  Créée le :
+                  <h:outputText value="#{announcement.date}">
+                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+                  </h:outputText>
+                  <p>par ${announcement.creator}</p>
+                  <h:commandButton
+                    value="Supprimer"
+                    action="#{Leboncoin.removeAnnouncement(announcement)}"
+                    class="mt-2 btn btn-danger mx-auto"
+                  />
+                </div>
+              </div>
+            </c:forEach>
+          </c:otherwise>
+        </c:choose>
+      </div>
+    </h:form>
+  </h:body>
+</html>
